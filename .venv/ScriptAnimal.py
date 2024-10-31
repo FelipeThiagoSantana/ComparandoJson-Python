@@ -72,7 +72,7 @@ try:
             nome_animal = inspecao.get("nomeAnimal")
             if nome_animal:
                 animais_primeira_lista.add(nome_animal)
-        print(f"--------------------# Total de animais em Completos: {contador_desclassificados}",
+        print(f"--------------------# Total de animais desclassificados: {contador_desclassificados}",
               "#--------------------------------")
 
     # Abre e carrega os dados do segundo JSON
