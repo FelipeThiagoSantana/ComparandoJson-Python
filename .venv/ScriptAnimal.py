@@ -11,11 +11,11 @@ try:
         # Contador para cada seção
         contador_rgns = 0
         contador_completo = 0
-        contador_rgds = 0
+        contador_rgdgd = 0
         contador_rgd = 0
         contador_desclassificados = 0
         print(
-            '---------------------------------------------** RGN **---------------------------------------------------')
+            '---------------------------------------------** RGNs **---------------------------------------------------')
         for inspecao in dados.get("INSPECOES", []):
             if inspecao.get('pkTipoInspecao') == 'RGN':
                 print('Animal:', inspecao.get('nomeAnimal'), ' | ', 'Brinco:', inspecao.get('cgnAnimal'), ' | ',
@@ -24,7 +24,7 @@ try:
             nome_animal = inspecao.get("nomeAnimal")
             if nome_animal:
                 animais_primeira_lista.add(nome_animal)
-        print(f"Total de animais em RGNS: {contador_rgns}")
+        print(f"--------------------# Total de animais em Completos: {contador_rgns}", "#--------------------------------")
         print("")
         print('---------------------------------------------** Completos **---------------------------------------------------')
         for inspecao in dados.get("INSPECOES", []):
@@ -35,18 +35,20 @@ try:
             nome_animal = inspecao.get("nomeAnimal")
             if nome_animal:
                 animais_primeira_lista.add(nome_animal)
-        print(f"--------------------#Total de animais em Completos: {contador_completo}", "#--------------------------------")
+        print(f"--------------------# Total de animais em Completos: {contador_completo}", "#--------------------------------")
         print("")
-        print('---------------------------------------------*** RGDS ***----------------------------------------------------')
+        print('---------------------------------------------*** RGDGD ***----------------------------------------------------')
         for inspecao in dados.get("INSPECOES", []):
             if inspecao.get('pkTipoInspecao') == 'RGDGD':
                 print('Animal:', inspecao.get('nomeAnimal'), ' | ', 'Brinco:', inspecao.get('cgdAnimal'), ' | ',
                       inspecao.get('idParametro'), ' | ', inspecao.get('idStatus'))
-                contador_rgds += 1  # Incrementa o contador
+                contador_rgdgd += 1  # Incrementa o contador
             nome_animal = inspecao.get("nomeAnimal")
             if nome_animal:
                 animais_primeira_lista.add(nome_animal)
-        print(f"Total de animais em RGDS: {contador_rgds}")
+        print(f"--------------------# Total de animais em Completos: {contador_rgdgd}",
+              "#--------------------------------")
+        print("")
 
         print('-----------------------------------------**** RGD ****---------------------------------------')
         for inspecao in dados.get("INSPECOES", []):
@@ -57,18 +59,21 @@ try:
             nome_animal = inspecao.get("nomeAnimal")
             if nome_animal:
                 animais_primeira_lista.add(nome_animal)
-        print(f"Total de animais em RGD: {contador_rgd}")
+        print(f"--------------------# Total de animais em Completos: {contador_rgd}",
+              "#--------------------------------")
+        print("")
 
         print('-----------------------------------------**** Desclassificados ****---------------------------------------')
         for inspecao in dados.get("INSPECOES", []):
             if inspecao.get('idStatus') == 'AD':
-                print('Animal:', inspecao.get('nomeAnimal'), ' | ', 'Brinco:', inspecao.get('cgdAnimal'), ' | ',
+                print('Animal:', inspecao.get('nomeAnimal'), ' | ', 'Brinco:', inspecao.get('cgdAnimal'), inspecao.get('cgnAnimal'), ' | ',
                       inspecao.get('idParametro'), ' | ', inspecao.get('idStatus'))
                 contador_desclassificados += 1  # Incrementa o contador
             nome_animal = inspecao.get("nomeAnimal")
             if nome_animal:
                 animais_primeira_lista.add(nome_animal)
-        print(f"Total de animais Desclassificados: {contador_desclassificados}")
+        print(f"--------------------# Total de animais em Completos: {contador_desclassificados}",
+              "#--------------------------------")
 
     # Abre e carrega os dados do segundo JSON
     with open("lista.json", encoding='ISO-8859-1') as animais_json:
@@ -91,13 +96,12 @@ try:
     print(
         '-----------------------------------------**** Animais da primeira lista que não estão na segunda ****---------------------------------------')
     if diferenca_animais:
-        print('-----------------------------------------------------Animais Completos---------------------------------------------------')
         for animal in diferenca_animais:
-            if inspecao.get('pkTipoInspecao') == 'CGNmaisCGD_Femea' or inspecao.get(
-                    'pkTipoInspecao') == 'RGNmaisRGD_Femea':
-                print('Animal:', inspecao.get('nomeAnimal'), ' | ', 'Brinco:', inspecao.get('cgnAnimal'), ' | ',
-                      inspecao.get('idParametro'), ' | ', inspecao.get('idStatus'))
-
+            contador_desclassificados += 1  # Incrementa o contador
+            nome_animal = inspecao.get("nomeAnimal")
+    print('Animal:', inspecao.get('nomeAnimal'), ' | ', 'BrincoCGN:', inspecao.get('cgnAnimal'), 'BrincoCGD',
+          inspecao.get('cgdAnimal'), ' | ',
+          inspecao.get('idParametro'), ' | ', inspecao.get('idStatus'))
 
 
 except FileNotFoundError:
